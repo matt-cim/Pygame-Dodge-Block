@@ -2,7 +2,7 @@ import random
 import pygame
 from datetime import datetime
 import re
-
+ 
 global rat
 global consume_hor
 global consume_ver
@@ -10,13 +10,14 @@ global hits
 
 # note have backup as txt file
 
-
+# game board is first created and then remains active till user quits
 def main():
     pygame.init()
-    # arbitrary board size
+    # creating the board
     board = pygame.display.set_mode((600, 600))
     pygame.display.update()
 
+    # variables for block movements and the lines that oscillate back and forth
     hits = 0
     horizontal = 300
     vertical = 320
@@ -33,12 +34,8 @@ def main():
     line_four = pygame.draw.line(board, (0, 0, 0), (0, 0), (0, 0), 0)
     line_five = pygame.draw.line(board, (0, 0, 0), (0, 0), (0, 0), 0)
     
-
-
-
     truth = True
     moving_right = True
-
     clock_slow = pygame.time.Clock()
 
 
@@ -48,10 +45,10 @@ def main():
         for action in pygame.event.get():
         
 
-            # had break statement here but only broke for loop, not while    
+            # break statement     
             if action.type == pygame.QUIT: truth = False
 
-            # mention moving by one block problem, so had to change from this to adding clock and stuff
+            # user pressing the key activates a velocity change
             if action.type == pygame.KEYDOWN:
 
                 if action.key == pygame.K_UP: vertical_change = -7
@@ -60,12 +57,12 @@ def main():
                 elif action.key == pygame.K_LEFT: horizontal_change = -7
 
 
-        # slows down framerate so icon does not move at the speed of light
+        # slows down framerate so the block maintains a playable speed
         clock_slow.tick(22)
         horizontal += horizontal_change
         vertical += vertical_change
 
-
+        # controls the movement of the line. far_one represents leftmost point on line, right_one represents rightmost point
         if far_one >= 600 and moving_right: 
             near_one -= 10
             far_one -= 10
@@ -83,6 +80,7 @@ def main():
             moving_right = True       
 
 
+        # each time the green block is consumed, a line is added to increase difficulty
         if hits == 1: 
             line_one = pygame.draw.line(board, (255, 0, 0), (near_one, 100), (far_one, 100), 3) 
         elif hits == 2:
@@ -111,30 +109,31 @@ def main():
             line_five = pygame.draw.line(board, (255, 0, 0), (near_one, 500), (far_one, 500), 3)
 
 
-
-
-        # look up colors here. mention first two pos. on board, last two width and height
+        # update the "snake" block so that moevement is simulated
         snake = pygame.draw.rect(board, (255, 0, 255), pygame.Rect(horizontal, vertical, 20, 20))
 
+        # game over, "snake" block has left game area
         for pixel in range(20):
             if pixel + horizontal >= 600 or pixel + vertical >= 600 or horizontal < 0 or \
                 vertical < 0: truth =- False
-        # drawing consumed piece, show looking 
-        # rat = pygame.draw.rect(board, (0, 255, 0), 
-        # pygame.Rect(consume_hor, consume_ver, 12, 12))
+      
+        # "rat" represents the green block that is consumed by "snake" block
         rat = rat_reload(consume_hor, consume_ver, board)
 
         # updates board
         pygame.display.flip()
-        # reset board, show what happens when this is not present
         board = pygame.display.set_mode((600, 600))
 
 
+        # game over, block collides with the red lines
         if hits > 0 and (snake.colliderect(line_one) or snake.colliderect(line_two) or \
             snake.colliderect(line_three) or snake.colliderect(line_four) or \
             snake.colliderect(line_five)): truth = False
 
 
+            
+            #ENDED HERE
+            
         # tried using a for loop to check pixel by pixel but this function
         # allowed for me to not have to change frame rate
         if snake.colliderect(rat): 
