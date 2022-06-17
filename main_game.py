@@ -8,7 +8,7 @@ global consume_hor
 global consume_ver
 global hits
 
-
+# note have backup as txt file
 
 
 def main():
