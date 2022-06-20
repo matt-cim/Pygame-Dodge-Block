@@ -131,51 +131,28 @@ def main():
             snake.colliderect(line_five)): truth = False
 
 
-            
-            #ENDED HERE
-            
-        # tried using a for loop to check pixel by pixel but this function
-        # allowed for me to not have to change frame rate
         if snake.colliderect(rat): 
             curr_time = datetime.now().time()
-            # a = curr_time.strftime("%H:%M:%S")
-            # print(a)
-            # strftime() is time objects to string method
-            # note time is represemted like 19:39:05
+            # note time is represented like 19:39:05
             first_set = re.findall("^[\d]([\d]):[\d]([\d]):[\d]([\d])$", curr_time.strftime("%H:%M:%S"))
             second_set = re.findall("^([\d])[\d]:([\d])[\d]:([\d])[\d]$", curr_time.strftime("%H:%M:%S"))
 
             # second 2, 5, 5  (one + two + three * 48 -mod magic for this num)
             # first 9, 9, 9  ((one + two + three) * 21) + 15
-            print(curr_time.strftime("%H:%M:%S"))
-            print(first_set)
-            print(second_set)
             random_one = 0
             for integer_first in first_set[0]:
                 random_one += int(integer_first)
-                # if integer_first == 0: random_one *= 1
-                # else: random_one *= int(integer_first)
 
             random_two = 0
             for integer_second in second_set[0]:
                 random_two += int(integer_second)
-                # if integer_second == 0: random_two *= 1
-                # else: random_two *= int(integer_second)
-            
-            print("one{}",random_one)
-            print("two{}",random_two)
 
             consume_hor = (random_one * random.randint(1, 21)) + 15
             consume_ver = random_two * random.randint(1, 48)
 
             hits += 1
 
-            # if consume_hor % 10 = 0: 
-
-            # print(consume_hor)
-            # print(consume_ver)
-
-
+# displays updated location of orange block, or "rat"
 def rat_reload(horizontal, vertical, board):
     rat = pygame.draw.rect(board, (0, 255, 0), pygame.Rect(horizontal, vertical, 12, 12))
     return rat
