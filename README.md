@@ -12,8 +12,6 @@ Instead of using the Python Random Module, I wanted to use a more creative metho
 ```
 I used the "datetime" module to get the current time, then parsed this time via regular expressions. Using the example above, **first_set** would "capture" [9,9,5], while **second_set** would "capture" [1,3,0]. 
 ```
-            # second 2, 5, 5  (one + two + three * 48 -mod magic for this num)
-            # first 9, 9, 9  ((one + two + three) * 21) + 15
             random_one = 0
             for integer_first in first_set[0]:
                 random_one += int(integer_first)
@@ -25,7 +23,6 @@ I used the "datetime" module to get the current time, then parsed this time via 
             consume_hor = (random_one * random.randint(1, 21)) + 15
             consume_ver = random_two * random.randint(1, 48)
 ```
-
-
+For **first_set** the maximum integer each index could be is [9,9,9] and for **second_set** it would be [2,5,5] respectively. With this in mind, I calculated that after summing each index up for **first_set**, this sum could be multiplied by a random number between 1 and 21 inclusive and then have 15 added to it and that would always allow for this blocks horizontal position to be within the game board. For **second_set**, I calculated it could be multiplied by a number between 1 and 48 inclusive and that would always allow for this blocks vertical position to be within the game board. This way, the green block has the chance to be spawned at the edges of the gameboard without ever leaving the board, and has the chance to be spawned anywhere inside.
 
 ![](gameplay.gif)
