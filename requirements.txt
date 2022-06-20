@@ -1,0 +1,4 @@
+DateTime==4.4
+pygame==2.1.2
+pytz==2022.1
+zope.interface==5.4.0
