@@ -1,8 +1,8 @@
 # Pygame-Dodge-Block
 The purpose of creating this game was to experiment with **Pygame** (a module for the Python programming language specifically intended to help you make games and other multimedia applications), **regular expressions**, and **frame rates**. As each green block is "consumed" by the purple block, the green block is placed randomly throughout the game board and the level becomes increasingly more difficult. The game ends if the user-controlled purple block exits the game board or collides with the girating red lines in which the player must avoid.
 
-# Randomness
-Instead of using the Python Random Module, I wanted to use a more creative method for mimicking randomness.        
+## Randomness
+I wanted to use a creative method for mimicking randomness when determining where the green block would spawn after colliding with the purple block.        
 
 ```
             curr_time = datetime.now().time()
@@ -23,6 +23,6 @@ I used the "datetime" module to get the current time, then parsed this time via 
             consume_hor = (random_one * random.randint(1, 21)) + 15
             consume_ver = random_two * random.randint(1, 48)
 ```
-For **first_set** the maximum integer each index could be is [9,9,9] and for **second_set** it would be [2,5,5] respectively. With this in mind, I calculated that after summing each index up for **first_set**, this sum could be multiplied by a random number between 1 and 21 inclusive and then have 15 added to it and that would always allow for this blocks horizontal position to be within the game board. For **second_set**, I calculated it could be multiplied by a number between 1 and 48 inclusive and that would always allow for this blocks vertical position to be within the game board. This way, the green block has the chance to be spawned at the edges of the gameboard without ever leaving the board, and has the chance to be spawned anywhere inside.
+For **first_set** the maximum integer each index could be is [9,9,9] and for **second_set** it would be [2,5,5] respectively. With this in mind, I calculated that after summing each index up for **first_set**, this sum could be multiplied by a random number between 1 and 21 inclusive and then have 15 added to it and that would always allow for this blocks horizontal position to be within the game board. For **second_set**, I calculated it could be multiplied by a random number between 1 and 48 inclusive and that would always allow for this blocks vertical position to be within the game board. This way, the green block has the chance to be spawned at the edges of the gameboard without ever leaving the board, and has the chance to be spawned **anywhere** inside.
 
 ![](gameplay.gif)
